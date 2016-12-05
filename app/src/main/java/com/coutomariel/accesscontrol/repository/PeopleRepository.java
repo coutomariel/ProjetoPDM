@@ -13,12 +13,19 @@ import com.coutomariel.accesscontrol.util.Constantes;
 public class PeopleRepository extends SQLiteOpenHelper {
 
 
-    public PeopleRepository(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, Constantes.DB_NOME, factory, Constantes.DB_VERSAO);
+    public PeopleRepository(Context context) {
+        super(context, Constantes.DB_NOME, null, Constantes.DB_VERSAO);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase db) {
+//        StringBuilder query = new StringBuilder();
+//        query.append("CREATE TABLE TB_PEOPLE( ");
+//        query.append("ID_PEOPLE INT PRIMARY KEY AUTOINCREMENT, ");
+//        query.append("NOME TEXT(25)NOT NULL");
+//        query.append(");");
+//
+//        db.execSQL(query.toString());
 
     }
 
