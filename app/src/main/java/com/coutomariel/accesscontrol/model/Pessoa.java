@@ -10,8 +10,10 @@ public class Pessoa {
 
     private int id;
     private String nome;
+    private String cpf;
     private Date dataAdmissao;
     private Setor setor;
+    private Sexo sexo;
     private TipoPessoa tipoPessoa;
 
     public int getId() {
@@ -30,6 +32,14 @@ public class Pessoa {
         this.nome = nome;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
     public Date getDataAdmissao() {
         return dataAdmissao;
     }
@@ -46,6 +56,14 @@ public class Pessoa {
         this.setor = setor;
     }
 
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
+    }
+
     public TipoPessoa getTipoPessoa() {
         return tipoPessoa;
     }
@@ -58,8 +76,10 @@ public class Pessoa {
     public String toString() {
         return "Pessoa{" +
                 "nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
                 ", dataAdmissao=" + dataAdmissao +
                 ", setor=" + setor +
+                ", sexo=" + sexo +
                 ", tipoPessoa=" + tipoPessoa +
                 '}';
     }
