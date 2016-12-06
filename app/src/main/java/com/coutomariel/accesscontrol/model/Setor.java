@@ -19,4 +19,13 @@ public enum Setor {
     public String getDescricao() {
         return descricao;
     }
+
+    public static Setor getSetor(int pos) {
+        for (Setor s : Setor.values()) {
+            if (s.ordinal() == pos) {
+                return s;
+            }
+        }
+        return null;
+    }
 }

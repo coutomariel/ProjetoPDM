@@ -1,4 +1,4 @@
-package com.coutomariel.accesscontrol.com.coutomariel.accesscontrol.fragment;
+package com.coutomariel.accesscontrol.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

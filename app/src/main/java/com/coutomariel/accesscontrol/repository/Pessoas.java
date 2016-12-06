@@ -10,10 +10,10 @@ import com.coutomariel.accesscontrol.util.Constantes;
  * Created by Mariel on 02/12/2016.
  */
 
-public class PeopleRepository extends SQLiteOpenHelper {
+public class Pessoas extends SQLiteOpenHelper {
 
 
-    public PeopleRepository(Context context) {
+    public Pessoas(Context context) {
         super(context, Constantes.DB_NOME, null, Constantes.DB_VERSAO);
     }
 

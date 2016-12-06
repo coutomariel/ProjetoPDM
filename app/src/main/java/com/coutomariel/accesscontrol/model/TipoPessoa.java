@@ -19,4 +19,13 @@ public enum TipoPessoa {
     public String getDescricao() {
         return descricao;
     }
+
+    public static TipoPessoa getTipoPessoa(int pos) {
+        for (TipoPessoa t : TipoPessoa.values()) {
+            if (t.ordinal() == pos) {
+                return t;
+            }
+        }
+        return null;
+    }
 }

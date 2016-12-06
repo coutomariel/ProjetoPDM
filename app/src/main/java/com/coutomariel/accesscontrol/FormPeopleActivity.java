@@ -7,36 +7,56 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-import com.coutomariel.accesscontrol.com.coutomariel.accesscontrol.fragment.DatePickerFragment;
+import com.coutomariel.accesscontrol.fragment.DatePickerFragment;
+import com.coutomariel.accesscontrol.model.Pessoa;
 import com.coutomariel.accesscontrol.model.Setor;
+import com.coutomariel.accesscontrol.model.Sexo;
 import com.coutomariel.accesscontrol.model.TipoPessoa;
-import com.coutomariel.accesscontrol.repository.PeopleRepository;
+import com.coutomariel.accesscontrol.repository.Pessoas;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class FormPeopleActivity extends AppCompatActivity {
 
     private Spinner spinnerTpPessoa, spinnerSetores;
+    private RadioGroup rbgSexo;
+    private EditText edtNome, edtCpf, edtAdmissao;
 
-    private EditText edtAdmissao;
+    private Pessoas pessoas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_people);
 
+        getSupportActionBar().setTitle("Cadastro de Pessoa");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        pessoas = new Pessoas(this);
+
         spinnerTpPessoa = (Spinner) findViewById(R.id.spnTipoPessoa);
-        this.carregaTiposPessoa();
-
-
         spinnerSetores = (Spinner) findViewById(R.id.spnSetor);
+
+        rbgSexo = (RadioGroup) findViewById(R.id.rbgSexo);
+
+        edtNome = (EditText) findViewById(R.id.edtNome);
+        edtCpf = (EditText) findViewById(R.id.edtCpf);
+        edtAdmissao = (EditText) findViewById(R.id.edtAdmissao);
+
+        this.carregaTiposPessoa();
         this.carregaSetores();
-
-
     }
+
 
     public void setData(View view) {
         DatePickerFragment datePickerFragment = new DatePickerFragment();
@@ -78,5 +98,40 @@ public class FormPeopleActivity extends AppCompatActivity {
         ArrayAdapter adapterSetores = new ArrayAdapter(FormPeopleActivity.this, android.R.layout.simple_spinner_item, setores);
         adapterSetores.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSetores.setAdapter(adapterSetores);
+    }
+
+    public void enviarPessoa(View view){
+        Toast.makeText(this, "Pessoa:"+montarPessoa(), Toast.LENGTH_SHORT).show();
+    }
+
+    private Pessoa montarPessoa(){
+        Pessoa pessoa = new Pessoa();
+        pessoa.setNome(edtNome.getText().toString());
+        pessoa.setCpf(edtCpf.getText().toString());
+        switch (rbgSexo.getCheckedRadioButtonId()) {
+            case R.id.rbtMasc:
+                pessoa.setSexo(Sexo.MASCULINO);
+                break;
+            case R.id.rbtFem:
+                pessoa.setSexo(Sexo.FEMININO);
+                break;
+        }
+
+        Setor setor = Setor.getSetor(spinnerSetores.getSelectedItemPosition());
+        pessoa.setSetor(setor);
+
+        TipoPessoa tipoPessoa = TipoPessoa.getTipoPessoa(spinnerTpPessoa.getSelectedItemPosition());
+        pessoa.setTipoPessoa(tipoPessoa);
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            Date admissao = dateFormat.parse(edtAdmissao.getText().toString());
+            pessoa.setDataAdmissao(admissao);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return  pessoa;
     }
 }
