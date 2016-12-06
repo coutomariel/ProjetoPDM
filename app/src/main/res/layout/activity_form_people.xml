@@ -1,70 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_form_people"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.coutomariel.accesscontrol.FormPeopleActivity">
+    android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_form_people"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nome:"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:orientation="vertical"
+        tools:context="com.coutomariel.accesscontrol.FormPeopleActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sexo:"/>
-    <RadioGroup
-        android:id="@+id/rbgSexo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rbtMasc"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Masculino" />
+            android:text="Nome:"/>
 
-        <RadioButton
-            android:id="@+id/rbtFem"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/edtNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="Cpf:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/edtCpf"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Feminino" />
-    </RadioGroup>
+            android:text="Sexo:"/>
+        <RadioGroup
+            android:id="@+id/rbgSexo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <RadioButton
+                android:id="@+id/rbtMasc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Masculino" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tipo"/>
-    <Spinner
-        android:id="@+id/spnTipoPessoa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-    </Spinner>
+            <RadioButton
+                android:id="@+id/rbtFem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Feminino" />
+        </RadioGroup>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Setor"/>
-    <Spinner
-        android:id="@+id/spnSetor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-    </Spinner>
-    <Button
-        android:id="@+id/btnEnviar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Enviar" />
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tipo"/>
+        <Spinner
+            android:id="@+id/spnTipoPessoa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </Spinner>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Setor"/>
+        <Spinner
+            android:id="@+id/spnSetor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </Spinner>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="setData"
+                android:text="Data admissão." />
+
+            <EditText
+                android:id="@+id/edtAdmissao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/btnEnviar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enviar" />
+    </LinearLayout>
+</ScrollView>
