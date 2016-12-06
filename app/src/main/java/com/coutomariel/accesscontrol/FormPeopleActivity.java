@@ -7,6 +7,7 @@ import android.widget.Spinner;
 
 import com.coutomariel.accesscontrol.model.Setor;
 import com.coutomariel.accesscontrol.model.TipoPessoa;
+import com.coutomariel.accesscontrol.repository.PeopleRepository;
 
 import java.util.ArrayList;
 
