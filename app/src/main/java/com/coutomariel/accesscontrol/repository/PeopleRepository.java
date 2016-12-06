@@ -19,13 +19,13 @@ public class PeopleRepository extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-//        StringBuilder query = new StringBuilder();
-//        query.append("CREATE TABLE TB_PEOPLE( ");
-//        query.append("ID_PEOPLE INT PRIMARY KEY AUTOINCREMENT, ");
-//        query.append("NOME TEXT(25)NOT NULL");
-//        query.append(");");
-//
-//        db.execSQL(query.toString());
+        StringBuilder query = new StringBuilder();
+        query.append("CREATE TABLE TB_PEOPLE( ");
+        query.append("ID_PEOPLE INT PRIMARY KEY AUTOINCREMENT, ");
+        query.append("NOME TEXT(25)NOT NULL");
+        query.append(");");
+
+        db.execSQL(query.toString());
 
     }
 
