@@ -70,7 +70,7 @@ public class FormPeopleActivity extends AppCompatActivity {
 
         datePickerFragment.setArguments(bundle);
         datePickerFragment.setDateListener(dateListener);
-        datePickerFragment.show(getFragmentManager(), "Data Adissão.");
+        datePickerFragment.show(getFragmentManager(), "Data Adimissão.");
     }
 
     private DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
@@ -102,6 +102,8 @@ public class FormPeopleActivity extends AppCompatActivity {
 
     public void enviarPessoa(View view){
         Toast.makeText(this, "Pessoa:"+montarPessoa(), Toast.LENGTH_SHORT).show();
+        Pessoa pessoa = montarPessoa();
+        pessoas.salvarPessoa(pessoa);
     }
 
     private Pessoa montarPessoa(){
