@@ -2,12 +2,18 @@ package com.coutomariel.accesscontrol.repository;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 
 import com.coutomariel.accesscontrol.model.Pessoa;
+import com.coutomariel.accesscontrol.model.TipoPessoa;
 import com.coutomariel.accesscontrol.util.Constantes;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Mariel on 02/12/2016.
@@ -65,4 +71,31 @@ public class Pessoas extends SQLiteOpenHelper {
 
         return contentValues;
     }
+
+
+    public List<Pessoa> listarPessoas() {
+        List<Pessoa> lista = new ArrayList<Pessoa>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("TB_PEOPLE", null, null, null, null, null, "NOME");
+
+        while (cursor.moveToNext()) {
+            Pessoa pessoa = new Pessoa();
+            pessoa.setId(cursor.getInt(cursor.getColumnIndex("ID_PEOPLE")));
+            pessoa.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+            pessoa.setCpf(cursor.getString(cursor.getColumnIndex("CPF")));
+
+            int time = cursor.getInt(cursor.getColumnIndex("DT_ADMISSAO"));
+            Date dtAdmissao = new Date();
+            dtAdmissao.setTime(time);
+            pessoa.setDataAdmissao(dtAdmissao);
+
+            lista.add(pessoa);
+
+            
+        }
+
+
+        return lista;
+    }
+
 }

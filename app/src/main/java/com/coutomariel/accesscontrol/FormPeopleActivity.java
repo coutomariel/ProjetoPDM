@@ -1,6 +1,7 @@
 package com.coutomariel.accesscontrol;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -104,6 +105,9 @@ public class FormPeopleActivity extends AppCompatActivity {
         Toast.makeText(this, "Pessoa:"+montarPessoa(), Toast.LENGTH_SHORT).show();
         Pessoa pessoa = montarPessoa();
         pessoas.salvarPessoa(pessoa);
+        Intent i = new Intent(this, ListPeopleActivity.class);
+        startActivity(i);
+        finish();
     }
 
     private Pessoa montarPessoa(){
