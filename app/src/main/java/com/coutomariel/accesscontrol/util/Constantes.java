@@ -7,6 +7,6 @@ package com.coutomariel.accesscontrol.util;
 public class Constantes {
 
     public static final String DB_NOME = "access_control";
-    public static final int DB_VERSAO = 1;
+    public static final int DB_VERSAO = 2;
 
 }

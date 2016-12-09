@@ -46,6 +46,7 @@ public class FormPeopleActivity extends AppCompatActivity {
     private Spinner spinnerTpPessoa, spinnerSetores;
     private RadioGroup rbgSexo;
     private EditText edtNome, edtCpf, edtAdmissao;
+    private ImageView campoFoto;
 
     private Pessoas pessoas;
 
@@ -68,6 +69,8 @@ public class FormPeopleActivity extends AppCompatActivity {
         edtNome = (EditText) findViewById(R.id.edtNome);
         edtCpf = (EditText) findViewById(R.id.edtCpf);
         edtAdmissao = (EditText) findViewById(R.id.edtAdmissao);
+
+        campoFoto = (ImageView) findViewById(R.id.imgFoto);
 
         Button btnFoto = (Button) findViewById(R.id.btnFoto);
         btnFoto.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +97,7 @@ public class FormPeopleActivity extends AppCompatActivity {
                 Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
                 foto.setImageBitmap(bitmapReduzido);
                 foto.setScaleType(ImageView.ScaleType.FIT_XY);
+                foto.setTag(caminhoFoto);
             }
         }
 
@@ -162,6 +166,8 @@ public class FormPeopleActivity extends AppCompatActivity {
                 pessoa.setSexo(Sexo.FEMININO);
                 break;
         }
+
+        pessoa.setCaminhoFoto((String) campoFoto.getTag());
 
         Setor setor = Setor.getSetor(spinnerSetores.getSelectedItemPosition());
         pessoa.setSetor(setor);

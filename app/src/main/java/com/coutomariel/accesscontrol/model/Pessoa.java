@@ -15,6 +15,7 @@ public class Pessoa {
     private Setor setor;
     private Sexo sexo;
     private TipoPessoa tipoPessoa;
+    private String caminhoFoto;
 
     public int getId() {
         return id;
@@ -71,6 +72,10 @@ public class Pessoa {
     public void setTipoPessoa(TipoPessoa tipoPessoa) {
         this.tipoPessoa = tipoPessoa;
     }
+
+    public String getCaminhoFoto() {return caminhoFoto;}
+
+    public void setCaminhoFoto(String caminhoFoto) {this.caminhoFoto = caminhoFoto;}
 
     @Override
     public String toString() {

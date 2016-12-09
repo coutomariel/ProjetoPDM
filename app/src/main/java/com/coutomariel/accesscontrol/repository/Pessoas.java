@@ -21,6 +21,7 @@ import java.util.List;
 
 public class Pessoas extends SQLiteOpenHelper {
 
+    private String sql;
 
     public Pessoas(Context context) {
         super(context, Constantes.DB_NOME, null, Constantes.DB_VERSAO);
@@ -37,15 +38,20 @@ public class Pessoas extends SQLiteOpenHelper {
         query.append("TIPO_PESSOA TEXT(25) NOT NULL,");
         query.append("SETOR TEXT(25) NOT NULL,");
         query.append("DT_ADMISSAO INTEGER NOT NULL,");
-        query.append("PRESENTE INTEGER DEFAULT 0)");
+        query.append("PRESENTE INTEGER DEFAULT 0),");
+        query.append("CAMINHO_FOTO TEXT");
 
         db.execSQL(query.toString());
 
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        switch (oldVersion){
+            case 1:
+                sql = "ALTER TABLE TB_PEOPLE ADD COLUMN CAMINHO_FOTO TEXT";
+                db.execSQL(sql);
+        }
     }
 
     public void salvarPessoa(Pessoa pessoa) {
@@ -65,6 +71,7 @@ public class Pessoas extends SQLiteOpenHelper {
         contentValues.put("SEXO", pessoa.getSexo().toString());
         contentValues.put("SETOR", pessoa.getSetor().ordinal());
         contentValues.put("TIPO_PESSOA", pessoa.getTipoPessoa().ordinal());
+        contentValues.put("CAMINHO_FOTO", pessoa.getCaminhoFoto().toString());
 
         contentValues.put("DT_ADMISSAO", pessoa.getDataAdmissao().getTime());
 
@@ -83,6 +90,7 @@ public class Pessoas extends SQLiteOpenHelper {
             pessoa.setId(cursor.getInt(cursor.getColumnIndex("ID_PEOPLE")));
             pessoa.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
             pessoa.setCpf(cursor.getString(cursor.getColumnIndex("CPF")));
+            pessoa.setCaminhoFoto(cursor.getString(cursor.getColumnIndex("CAMINHO_FOTO")));
 
             int time = cursor.getInt(cursor.getColumnIndex("DT_ADMISSAO"));
             Date dtAdmissao = new Date();
