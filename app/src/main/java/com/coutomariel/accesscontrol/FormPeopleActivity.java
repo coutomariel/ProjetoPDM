@@ -1,13 +1,21 @@
 package com.coutomariel.accesscontrol;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -19,6 +27,7 @@ import com.coutomariel.accesscontrol.model.Sexo;
 import com.coutomariel.accesscontrol.model.TipoPessoa;
 import com.coutomariel.accesscontrol.repository.Pessoas;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,7 +35,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static android.view.View.SCALE_X;
+
 public class FormPeopleActivity extends AppCompatActivity {
+
+    private static final int CODIGO_CAMERA = 567;
+
+    private String caminhoFoto;
 
     private Spinner spinnerTpPessoa, spinnerSetores;
     private RadioGroup rbgSexo;
@@ -54,10 +69,35 @@ public class FormPeopleActivity extends AppCompatActivity {
         edtCpf = (EditText) findViewById(R.id.edtCpf);
         edtAdmissao = (EditText) findViewById(R.id.edtAdmissao);
 
+        Button btnFoto = (Button) findViewById(R.id.btnFoto);
+        btnFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                caminhoFoto = getExternalFilesDir(null) + "/"+ System.currentTimeMillis() +".jpg";
+                File arquivoFoto = new File(caminhoFoto);
+                intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(arquivoFoto));
+                startActivityForResult(intentCamera, CODIGO_CAMERA);
+            }
+        });
+
         this.carregaTiposPessoa();
         this.carregaSetores();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK){
+            if (requestCode == CODIGO_CAMERA) {
+                ImageView foto = (ImageView) findViewById(R.id.imgFoto);
+                Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
+                Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+                foto.setImageBitmap(bitmapReduzido);
+                foto.setScaleType(ImageView.ScaleType.FIT_XY);
+            }
+        }
+
+    }
 
     public void setData(View view) {
         DatePickerFragment datePickerFragment = new DatePickerFragment();
