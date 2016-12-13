@@ -125,6 +125,7 @@ public class FormPeopleActivity extends AppCompatActivity {
         }
     };
 
+
     private void carregaTiposPessoa(){
         ArrayList<String> tiposPessoa = new ArrayList<>();
         for(TipoPessoa pessoa : TipoPessoa.values() ){
@@ -158,6 +159,7 @@ public class FormPeopleActivity extends AppCompatActivity {
         Pessoa pessoa = new Pessoa();
         pessoa.setNome(edtNome.getText().toString());
         pessoa.setCpf(edtCpf.getText().toString());
+
         switch (rbgSexo.getCheckedRadioButtonId()) {
             case R.id.rbtMasc:
                 pessoa.setSexo(Sexo.MASCULINO);
@@ -174,6 +176,7 @@ public class FormPeopleActivity extends AppCompatActivity {
 
         TipoPessoa tipoPessoa = TipoPessoa.getTipoPessoa(spinnerTpPessoa.getSelectedItemPosition());
         pessoa.setTipoPessoa(tipoPessoa);
+
 
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 

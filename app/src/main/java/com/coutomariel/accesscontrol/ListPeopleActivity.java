@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.coutomariel.accesscontrol.model.Pessoa;
 import com.coutomariel.accesscontrol.repository.Pessoas;
+import com.coutomariel.accesscontrol.util.TipoMsg;
 import com.coutomariel.accesscontrol.util.Util;
 
 import java.text.DateFormat;
@@ -25,11 +26,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.widget.AdapterView.*;
+
 public class ListPeopleActivity extends AppCompatActivity {
 
+
+    private List<String> lista;
     private Pessoas repository;
     private ListView lstPessoas;
     private Button addPessoa;
+
+    private List<Pessoa> listaPessoas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,32 +48,14 @@ public class ListPeopleActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Listagem de registros");
 
 
-        List<String> lista = carregarLista();
+        repository = new Pessoas(this);
+        listaPessoas = repository.listarPessoas();
+
+        lista = carregarLista();
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lista);
         //adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         lstPessoas.setAdapter(adapter);
-
-
-
-        lstPessoas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Pessoa pessoa = new Pessoa();
-//
-//                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//
-//                StringBuilder info = new StringBuilder();
-//                info.append("Nome: "+pessoa.getNome());
-//                info.append("\nCpf: "+pessoa.getCpf());
-//                info.append("\nSexo: "+pessoa.getSexo().getDescricao());
-//                info.append("\nSetor: "+pessoa.getSetor().getDescricao());
-//                info.append("\nTipo: "+pessoa.getTipoPessoa().getDescricao());
-//                info.append("\nDt admissão: "+ dateFormat.format(pessoa.getDataAdmissao()));
-
-//                Util.showMsgToast(ListPeopleActivity.this, info.toString());
-            }
-
-        });
+        lstPessoas.setOnItemClickListener(clickListenerPessoas);
 
         addPessoa = (Button) findViewById(R.id.btnAddPeople);
         addPessoa.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +67,25 @@ public class ListPeopleActivity extends AppCompatActivity {
         });
 
     }
+    private OnItemClickListener clickListenerPessoas = new OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            Pessoa pessoa = listaPessoas.get(position);
+
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            StringBuilder info = new StringBuilder();
+            info.append("Nome: " + pessoa.getNome());
+            info.append("\nCPF: " + pessoa.getCpf());
+            info.append("\nSexo: " + pessoa.getSexo().getDescricao());
+            info.append("\nSetor: " + pessoa.getSetor().getDescricao());
+            info.append("\nTipo: " + pessoa.getTipoPessoa().getDescricao());
+            info.append("\nDt. Nasc: " + dateFormat.format(pessoa.getDataAdmissao()));
+
+            Util.showMsgAlertOK(ListPeopleActivity.this, "Info", info.toString(), TipoMsg.INFO);
+        }
+    };
+
 
     private List<String> carregarLista() {
         repository = new Pessoas(this);

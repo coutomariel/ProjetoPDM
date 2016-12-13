@@ -28,7 +28,7 @@ public class Util {
         View lyttoast = inflater.inflate(R.layout.toast_template, (ViewGroup) activity.findViewById(R.id.lytToast));
 
         TextView txttoast = (TextView) lyttoast.findViewById(R.id.txtToast);
-        txttoast.setText("Teste do toast persoalizado!");
+        txttoast.setText(txt);
 
         Toast toast = new Toast(activity);
         toast.setView(lyttoast);

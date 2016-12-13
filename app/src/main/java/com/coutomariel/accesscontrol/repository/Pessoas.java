@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 
 import com.coutomariel.accesscontrol.model.Pessoa;
+import com.coutomariel.accesscontrol.model.Setor;
+import com.coutomariel.accesscontrol.model.Sexo;
 import com.coutomariel.accesscontrol.model.TipoPessoa;
 import com.coutomariel.accesscontrol.util.Constantes;
 
@@ -69,6 +71,7 @@ public class Pessoas extends SQLiteOpenHelper {
         contentValues.put("CPF", pessoa.getCpf());
 
         contentValues.put("SEXO", pessoa.getSexo().toString());
+
         contentValues.put("SETOR", pessoa.getSetor().ordinal());
         contentValues.put("TIPO_PESSOA", pessoa.getTipoPessoa().ordinal());
         contentValues.put("CAMINHO_FOTO", pessoa.getCaminhoFoto().toString());
@@ -90,9 +93,19 @@ public class Pessoas extends SQLiteOpenHelper {
             pessoa.setId(cursor.getInt(cursor.getColumnIndex("ID_PEOPLE")));
             pessoa.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
             pessoa.setCpf(cursor.getString(cursor.getColumnIndex("CPF")));
+
+            int sexo = cursor.getInt(cursor.getColumnIndex("SEXO"));
+            pessoa.setSexo(Sexo.getSexo(sexo));
+
+            int setor = cursor.getInt(cursor.getColumnIndex("SETOR"));
+            pessoa.setSetor(Setor.getSetor(setor));
+
+            int tipoPessoa = cursor.getInt(cursor.getColumnIndex("TIPO_PESSOA"));
+            pessoa.setTipoPessoa(TipoPessoa.getTipoPessoa(tipoPessoa));
+
             pessoa.setCaminhoFoto(cursor.getString(cursor.getColumnIndex("CAMINHO_FOTO")));
 
-            int time = cursor.getInt(cursor.getColumnIndex("DT_ADMISSAO"));
+            long time = cursor.getLong(cursor.getColumnIndex("DT_ADMISSAO"));
             Date dtAdmissao = new Date();
             dtAdmissao.setTime(time);
             pessoa.setDataAdmissao(dtAdmissao);

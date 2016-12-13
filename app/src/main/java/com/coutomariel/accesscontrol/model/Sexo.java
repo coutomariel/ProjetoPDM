@@ -17,5 +17,15 @@ public enum Sexo {
     public String getDescricao() {
         return descricao;
     }
+
+    public static Sexo getSexo(int pos) {
+        for (Sexo sexo : Sexo.values()) {
+            if (sexo.ordinal() == pos) {
+                return sexo;
+            }
+        }
+        return null;
+    }
+
 }
 
