@@ -12,6 +12,7 @@ import com.coutomariel.accesscontrol.model.Setor;
 import com.coutomariel.accesscontrol.model.Sexo;
 import com.coutomariel.accesscontrol.model.TipoPessoa;
 import com.coutomariel.accesscontrol.util.Constantes;
+import com.coutomariel.accesscontrol.util.Util;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,6 +64,35 @@ public class Pessoas extends SQLiteOpenHelper {
         db.insert("TB_PEOPLE", null, contentValues);
     }
 
+    public Pessoa buscarPorId(int id){
+        Pessoa pessoa = new Pessoa();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("TB_PEOPLE", null, "ID_PEOPLE = ?", new String[]{String.valueOf(id)}, null, null, "NOME");
+        if(cursor.moveToNext()){
+            setPessoaFromCursor(cursor, pessoa);
+        }
+        return pessoa;
+    };
+
+    public void removerPorId(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete("TB_PEOPLE", "ID_PEOPLE = ?", new String[]{String.valueOf(id)});
+    }
+
+    public List<Pessoa> listarPessoas() {
+        List<Pessoa> lista = new ArrayList<Pessoa>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("TB_PEOPLE", null, null, null, null, null, "NOME");
+
+        while (cursor.moveToNext()) {
+            Pessoa pessoa = new Pessoa();
+            setPessoaFromCursor(cursor, pessoa);
+            lista.add(pessoa);
+        }
+        return lista;
+    }
+
     @NonNull
     private ContentValues getContentValuesPessoa(Pessoa pessoa) {
         ContentValues contentValues = new ContentValues();
@@ -82,41 +112,26 @@ public class Pessoas extends SQLiteOpenHelper {
         return contentValues;
     }
 
+    private void setPessoaFromCursor(Cursor cursor, Pessoa pessoa) {
+        pessoa.setId(cursor.getInt(cursor.getColumnIndex("ID_PEOPLE")));
+        pessoa.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+        pessoa.setCpf(cursor.getString(cursor.getColumnIndex("CPF")));
 
-    public List<Pessoa> listarPessoas() {
-        List<Pessoa> lista = new ArrayList<Pessoa>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("TB_PEOPLE", null, null, null, null, null, "NOME");
+        int sexo = cursor.getInt(cursor.getColumnIndex("SEXO"));
+        pessoa.setSexo(Sexo.getSexo(sexo));
 
-        while (cursor.moveToNext()) {
-            Pessoa pessoa = new Pessoa();
-            pessoa.setId(cursor.getInt(cursor.getColumnIndex("ID_PEOPLE")));
-            pessoa.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
-            pessoa.setCpf(cursor.getString(cursor.getColumnIndex("CPF")));
+        int setor = cursor.getInt(cursor.getColumnIndex("SETOR"));
+        pessoa.setSetor(Setor.getSetor(setor));
 
-            int sexo = cursor.getInt(cursor.getColumnIndex("SEXO"));
-            pessoa.setSexo(Sexo.getSexo(sexo));
+        int tipoPessoa = cursor.getInt(cursor.getColumnIndex("TIPO_PESSOA"));
+        pessoa.setTipoPessoa(TipoPessoa.getTipoPessoa(tipoPessoa));
 
-            int setor = cursor.getInt(cursor.getColumnIndex("SETOR"));
-            pessoa.setSetor(Setor.getSetor(setor));
+        pessoa.setCaminhoFoto(cursor.getString(cursor.getColumnIndex("CAMINHO_FOTO")));
 
-            int tipoPessoa = cursor.getInt(cursor.getColumnIndex("TIPO_PESSOA"));
-            pessoa.setTipoPessoa(TipoPessoa.getTipoPessoa(tipoPessoa));
-
-            pessoa.setCaminhoFoto(cursor.getString(cursor.getColumnIndex("CAMINHO_FOTO")));
-
-            long time = cursor.getLong(cursor.getColumnIndex("DT_ADMISSAO"));
-            Date dtAdmissao = new Date();
-            dtAdmissao.setTime(time);
-            pessoa.setDataAdmissao(dtAdmissao);
-
-            lista.add(pessoa);
-
-            
-        }
-
-
-        return lista;
+        long time = cursor.getLong(cursor.getColumnIndex("DT_ADMISSAO"));
+        Date dtAdmissao = new Date();
+        dtAdmissao.setTime(time);
+        pessoa.setDataAdmissao(dtAdmissao);
     }
 
 }

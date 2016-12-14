@@ -2,6 +2,7 @@ package com.coutomariel.accesscontrol;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +27,7 @@ import com.coutomariel.accesscontrol.model.Setor;
 import com.coutomariel.accesscontrol.model.Sexo;
 import com.coutomariel.accesscontrol.model.TipoPessoa;
 import com.coutomariel.accesscontrol.repository.Pessoas;
+import com.coutomariel.accesscontrol.util.Util;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -49,6 +51,8 @@ public class FormPeopleActivity extends AppCompatActivity {
     private ImageView campoFoto;
 
     private Pessoas pessoas;
+
+    private Button btnSalvar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +90,24 @@ public class FormPeopleActivity extends AppCompatActivity {
 
         this.carregaTiposPessoa();
         this.carregaSetores();
+
+        btnSalvar = (Button) findViewById(R.id.btnEnviar);
+        btnSalvar.setOnClickListener(clickSalvar);
     }
+
+    private View.OnClickListener clickSalvar = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            Pessoa pessoa = montarPessoa();
+            Util.showMsgToast(FormPeopleActivity.this, "Enviando");
+            pessoas.salvarPessoa(pessoa);
+            Intent i = new Intent(FormPeopleActivity.this, ListPeopleActivity.class);
+            startActivity(i);
+            finish();
+
+        }
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -149,6 +170,7 @@ public class FormPeopleActivity extends AppCompatActivity {
     public void enviarPessoa(View view){
         Toast.makeText(this, "Pessoa:"+montarPessoa(), Toast.LENGTH_SHORT).show();
         Pessoa pessoa = montarPessoa();
+        Util.showMsgToast(this, "Enviando");
         pessoas.salvarPessoa(pessoa);
         Intent i = new Intent(this, ListPeopleActivity.class);
         startActivity(i);

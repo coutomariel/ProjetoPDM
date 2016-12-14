@@ -36,6 +36,7 @@ public class Util {
         toast.show();
     }
 
+
     public static void showMsgConfirm(final Activity activity, String titulo, String txt, TipoMsg tipoMsg, DialogInterface.OnClickListener listener) {
         int theme = 0, icone = 0;
         switch (tipoMsg) {
