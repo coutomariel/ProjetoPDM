@@ -1,28 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-
+    android:orientation="vertical"
+    android:background="@color/bg_action"
     android:id="@+id/activity_dashboard"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context="com.coutomariel.accesscontrol.DashboardActivity">
-
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@null"
-        android:text="Cadastro"
-        android:drawableTop="@drawable/list"
-        />
-    <Button
+        android:orientation="horizontal"
+        android:layout_marginTop="150dp">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="Cadastro"
+            android:onClick="callCadastro"
+            android:drawableTop="@drawable/adduser"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="lista"
+            android:onClick="callList"
+            android:drawableTop="@drawable/list"
+            />
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@null"
-        android:text="lista"
-        android:drawableTop="@drawable/list"
-        />
-
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp"
+        >
+        <Button
+            android:id="@+id/btnRedirectCadastro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="Cadastro"
+            android:drawableTop="@drawable/adduser"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="Settings"
+            android:drawableTop="@drawable/settings_icon"
+            />
+    </LinearLayout>
 </LinearLayout>
 

@@ -51,21 +51,18 @@ public class ListPeopleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_people);
 
+        getSupportActionBar().setTitle("Listagem de registros");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setTitle("Listagem de registros");
 
 
         repository = new Pessoas(this);
-//        listaPessoas = repository.listarPessoas();
         lstPessoas = (ListView) findViewById(R.id.lstPeople);
 
         listaPessoas = repository.listarPessoas();
 
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
         carregarLista();
-//        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lista);
-//        lstPessoas.setAdapter(adapter);
 
         lstPessoas.setOnItemClickListener(clickListenerPessoas);
         lstPessoas.setOnCreateContextMenuListener(contextMenuListener);
@@ -156,4 +153,14 @@ public class ListPeopleActivity extends AppCompatActivity {
             contextMenu.add(1,30,3,"Navegar");
         }
     };
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
+    }
 }
